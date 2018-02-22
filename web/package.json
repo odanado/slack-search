@@ -1,0 +1,39 @@
+{
+  "name": "slack-oauth-test",
+  "version": "1.0.0",
+  "description": "Nuxt.js project",
+  "author": "odan <odan3240@gmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cookie-parse": "^0.4.0",
+    "element-ui": "^2.2.0",
+    "js-cookie": "^2.2.0",
+    "jwt-decode": "^2.2.0",
+    "nuxt": "^1.0.0",
+    "query-string": "^5.1.0",
+    "slack": "^11.0.0",
+    "uuid": "^3.2.1",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-import-resolver-webpack": "^0.8.4",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-vue": "^4.0.0"
+  }
+}
