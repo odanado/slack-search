@@ -6,4 +6,4 @@ RUN pip install -r requirements.txt
 RUN mkdir /src
 WORKDIR /src
 CMD ["python", "main.py"]
-CMD ["tail", "-f", "/dev/null"]
+# CMD ["tail", "-f", "/dev/null"]
