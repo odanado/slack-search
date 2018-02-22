@@ -1,0 +1,8 @@
+requests
+click
+PyJWT
+flask
+flask-cors
+flask-sqlalchemy
+psycopg2-binary
+elasticsearch5
