@@ -11,6 +11,7 @@ export default {
     const { token, secret } = this.$route.query;
 
     if (!validateSecret(secret) || !token) {
+      // eslint-disable-next-line
       console.error('Something happened with the Sign In request');
     }
 
