@@ -3,11 +3,11 @@
     :data="convertedResults"
     style="width: 100%">
     <el-table-column
-      prop="timestamp"
+      prop="formatedDate"
       label="Date"
       width="180"/>
     <el-table-column
-      prop="channel"
+      prop="channelName"
       label="Channel"
       width="180"/>
     <el-table-column
@@ -17,6 +17,9 @@
 </template>
 
 <script>
+
+import dateFormat from 'dateformat';
+
 export default {
   props: {
     results: {
@@ -46,7 +49,8 @@ export default {
           const replacement = `@${v}`;
           x.text = x.text.replace(pattern, replacement);
         });
-        x.channel = this.id2channel.get(x.channel);
+        x.channelName = this.id2channel.get(x.channel);
+        x.formatedDate = dateFormat(new Date(x.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss');
       });
 
       return this.results;
