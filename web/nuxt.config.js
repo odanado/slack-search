@@ -38,7 +38,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['element-ui'],
+    vendor: ['element-ui', 'axios'],
     /*
     ** Run ESLint on save
     */

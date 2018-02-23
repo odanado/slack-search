@@ -1,11 +1,14 @@
 <template>
   <el-row>
-    <el-col :span="20">
-      <SearchBox />
+    <el-col :span="4">
+      <div class="text">Slack Search</div>
+    </el-col>
+    <el-col :span="17">
+      <SearchBox class="search-box" />
     </el-col>
     <el-col
       :span="2"
-      :offset="2">
+      :offset="1">
       <img :src="imageUrl">
     </el-col>
   </el-row>
@@ -31,11 +34,23 @@ export default {
 
 <style scoped>
 
+.text {
+  color: white;
+  line-height: 60px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.search-box {
+  margin-top: 10px;
+}
+
 img {
   width: 50px;
   height: 50px;
   border-radius: 100px;
   margin: auto 0;
+  margin-top: 5px;
 }
 </style>
 
