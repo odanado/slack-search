@@ -9,6 +9,9 @@ services:
                 - SERVER_URL=${SERVER_URL}
         ports:
             - "80:3000"
+        depends_on:
+            - app
+            - db
 
     app:
         build: app
@@ -18,12 +21,14 @@ services:
             - "5000:5000"
         env_file:
             - .env
+        depends_on:
+            - db
 
     db:
         image: postgres
         restart: always
         volumes:
-            - db-data/var/lib/postgresql/data
+            - db-data:/var/lib/postgresql/data
         environment:
             - POSTGRES_PASSWORD
 
