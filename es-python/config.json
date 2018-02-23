@@ -16,8 +16,7 @@
         "message": {
             "properties": {
                 "timestamp": {
-                    "type":  "date",
-                    "format": "date_hour_minute_second"
+                    "type":  "float"
                 }
             }
         }
