@@ -22,16 +22,17 @@
       width="90">
       <template slot-scope="scope">
         <div class="link">
+          <a
+            v-if="scope.row.link"
+            target="_blank"
+            :href="scope.row.link">Link</a>
           <el-button
+            v-else
             @click="fetchLink(scope.row)"
             type="text"
             size="medium">
             Fetch Link
           </el-button>
-          <a
-            target="_blank"
-            v-if="scope.row.link"
-            :href="scope.row.link">Link</a>
         </div>
       </template>
     </el-table-column>
