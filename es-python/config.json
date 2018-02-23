@@ -1,0 +1,25 @@
+{
+    "settings": {
+        "number_of_shards": 1,
+        "index": {
+            "analysis": {
+                "analyzer": {
+                    "default": {
+                        "tokenizer": "kuromoji_tokenizer",
+                        "type": "custom"
+                    }
+                }
+            }
+        }
+    },
+    "mappings": {
+        "message": {
+            "properties": {
+                "timestamp": {
+                    "type":  "date",
+                    "format": "date_hour_minute_second"
+                }
+            }
+        }
+    }
+}
