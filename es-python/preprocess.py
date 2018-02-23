@@ -1,7 +1,6 @@
 import os
 import json
 from pathlib import Path
-from datetime import datetime
 
 import click
 from elasticsearch5 import Elasticsearch, helpers
@@ -28,7 +27,6 @@ def parse_file(fname, channel):
         if data.get('subtype', '') == 'pinned_item':
             continue
 
-        timestamp = datetime.fromtimestamp(float(data['ts']))
         if data.get('subtype', '') == 'bot_message':
             user = data['bot_id']
 
@@ -43,7 +41,7 @@ def parse_file(fname, channel):
 
         results.append({'user': user, 'text': data['text'],
                         'channel': channel,
-                        'timestamp': timestamp.strftime("%Y-%m-%dT%H:%M:%S")})
+                        'timestamp': float(data['ts'])})
     return results
 
 
