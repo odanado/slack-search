@@ -15,6 +15,7 @@ export const state = {
   name: null,
   imageUrl: null,
   searchResults: [],
+  usersList: [],
 };
 
 export const mutations = {
@@ -30,6 +31,9 @@ export const mutations = {
   setSearchResults(state, searchResults) {
     state.searchResults = searchResults || null;
   },
+  setUsersList(state, usersList) {
+    state.usersList = usersList || [];
+  },
 };
 
 export const actions = {
@@ -42,6 +46,15 @@ export const actions = {
       const data = await Slack.users.info({ token, user });
       commit('setName', data.user.name);
       commit('setImageUrl', data.user.profile.image_192);
+    }
+  },
+  async fetchUsersList({ commit, getters }) {
+    const { slack } = getters.decodeToken;
+    const token = slack.access_token;
+
+    if (token) {
+      const data = await Slack.users.list({ token });
+      commit('setUsersList', data.members);
     }
   },
   async validateToken({ state, commit }) {
@@ -75,7 +88,10 @@ export const actions = {
     const token = getTokenFromCookie(req);
     if (token) {
       commit('setToken', token);
-      await dispatch('fetchUserInfo');
+      await Promise.all([
+        dispatch('fetchUserInfo'),
+        dispatch('fetchUsersList'),
+      ]);
     }
   },
 };
@@ -86,6 +102,9 @@ export const getters = {
   },
   decodeToken(state) {
     return jwtDecode(state.token);
+  },
+  id2user(state) {
+    return new Map(state.usersList.map(x => [x.id, x.name]));
   },
 };
 

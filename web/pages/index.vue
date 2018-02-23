@@ -1,6 +1,9 @@
 <template>
   <div>
-    <SearchResults :table-data="$store.state.searchResults"/>
+    <SearchResults
+      :results="$store.state.searchResults"
+      :id2user="$store.getters.id2user"
+    />
   </div>
 </template>
 
