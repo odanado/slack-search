@@ -51,7 +51,7 @@ es = Elasticsearch([ELASTICSEARCH_URL])
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(512), index=True, unique=True)
+    token = db.Column(db.String(512), index=True)
     secret = db.Column(db.String(36), unique=True)
 
     def to_dict(self):
