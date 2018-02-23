@@ -17,7 +17,12 @@ export default {
 
     setToken(token);
     this.$store.commit('setToken', token);
-    await this.$store.dispatch('fetchUserInfo');
+
+    await Promise.all([
+      this.$store.dispatch('fetchUserInfo'),
+      this.$store.dispatch('fetchUsersList'),
+      this.$store.dispatch('fetchChannelsList'),
+    ]);
 
     this.$router.replace('/');
   },

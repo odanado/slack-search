@@ -3,6 +3,7 @@
     <SearchResults
       :results="$store.state.searchResults"
       :id2user="$store.getters.id2user"
+      :id2channel="$store.getters.id2channel"
     />
   </div>
 </template>

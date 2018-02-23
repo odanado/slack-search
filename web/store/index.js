@@ -16,6 +16,7 @@ export const state = {
   imageUrl: null,
   searchResults: [],
   usersList: [],
+  channelsList: [],
 };
 
 export const mutations = {
@@ -33,6 +34,9 @@ export const mutations = {
   },
   setUsersList(state, usersList) {
     state.usersList = usersList || [];
+  },
+  setChannelsList(state, channelsList) {
+    state.channelsList = channelsList || [];
   },
 };
 
@@ -55,6 +59,15 @@ export const actions = {
     if (token) {
       const data = await Slack.users.list({ token });
       commit('setUsersList', data.members);
+    }
+  },
+  async fetchChannelsList({ commit, getters }) {
+    const { slack } = getters.decodeToken;
+    const token = slack.access_token;
+
+    if (token) {
+      const data = await Slack.channels.list({ token });
+      commit('setChannelsList', data.channels);
     }
   },
   async validateToken({ state, commit }) {
@@ -91,6 +104,7 @@ export const actions = {
       await Promise.all([
         dispatch('fetchUserInfo'),
         dispatch('fetchUsersList'),
+        dispatch('fetchChannelsList'),
       ]);
     }
   },
@@ -105,6 +119,9 @@ export const getters = {
   },
   id2user(state) {
     return new Map(state.usersList.map(x => [x.id, x.name]));
+  },
+  id2channel(state) {
+    return new Map(state.channelsList.map(x => [x.id, x.name]));
   },
 };
 

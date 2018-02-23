@@ -31,6 +31,12 @@ export default {
         return new Map();
       },
     },
+    id2channel: {
+      type: Map,
+      default() {
+        return new Map();
+      },
+    },
   },
   computed: {
     convertedResults() {
@@ -40,6 +46,7 @@ export default {
           const replacement = `@${v}`;
           x.text = x.text.replace(pattern, replacement);
         });
+        x.channel = this.id2channel.get(x.channel);
       });
 
       return this.results;
