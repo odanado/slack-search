@@ -5,11 +5,15 @@
     <el-table-column
       prop="formatedDate"
       label="Date"
-      width="180"/>
+      width="170"/>
     <el-table-column
       prop="channelName"
       label="Channel"
-      width="120"/>
+      width="80"/>
+    <el-table-column
+      prop="userName"
+      label="User"
+      width="100"/>
     <el-table-column
       prop="text"
       label="Text"/>
@@ -70,6 +74,7 @@ export default {
           x.text = x.text.replace(pattern, replacement);
         });
         x.channelName = this.id2channel.get(x.channel);
+        x.userName = this.id2user.get(x.user);
         x.formatedDate = dateFormat(new Date(x.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss');
       });
 

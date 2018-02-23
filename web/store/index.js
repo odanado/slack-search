@@ -122,7 +122,10 @@ export const getters = {
     return slack.access_token;
   },
   id2user(state) {
-    return new Map(state.usersList.map(x => [x.id, x.name]));
+    const users = new Map(state.usersList.map(x => [x.id, x.name]));
+    const bots = new Map(state.usersList.filter(x => x.is_bot)
+      .map(x => [x.profile.bot_id, x.name]));
+    return new Map([...users, ...bots]);
   },
   id2channel(state) {
     return new Map(state.channelsList.map(x => [x.id, x.name]));
