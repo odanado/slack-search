@@ -9,16 +9,36 @@
     <el-table-column
       prop="channelName"
       label="Channel"
-      width="180"/>
+      width="120"/>
     <el-table-column
       prop="text"
       label="Text"/>
+    <el-table-column
+      label="Link"
+      width="90">
+      <template slot-scope="scope">
+        <div class="link">
+          <el-button
+            @click="fetchLink(scope.row)"
+            type="text"
+            size="medium">
+            Fetch Link
+          </el-button>
+          <a
+            target="_blank"
+            v-if="scope.row.link"
+            :href="scope.row.link">Link</a>
+        </div>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
 <script>
 
+import Vue from 'vue';
 import dateFormat from 'dateformat';
+import Slack from 'slack';
 
 export default {
   props: {
@@ -56,5 +76,21 @@ export default {
       return this.results;
     },
   },
+  methods: {
+    async fetchLink(row) {
+      const token = this.$store.getters.getSlackToken;
+      const { timestamp, channel } = row;
+      const res = await Slack.chat.getPermalink({ token, message_ts: timestamp, channel });
+      if (res.ok) {
+        Vue.set(row, 'link', res.permalink);
+      }
+    },
+  },
 };
 </script>
+
+<style scoped>
+.link {
+  text-align: center;
+}
+</style>

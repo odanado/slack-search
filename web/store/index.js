@@ -1,4 +1,4 @@
-/* eslint no-shadow: ["error", { "allow": ["state"] }] */
+/* eslint no-shadow: ["error", { "allow": ["state", "getters"] }] */
 
 import Vue from 'vue';
 import Vuex from 'vuex';
@@ -116,6 +116,10 @@ export const getters = {
   },
   decodeToken(state) {
     return jwtDecode(state.token);
+  },
+  getSlackToken(state, getters) {
+    const { slack } = getters.decodeToken;
+    return slack.access_token;
   },
   id2user(state) {
     return new Map(state.usersList.map(x => [x.id, x.name]));
