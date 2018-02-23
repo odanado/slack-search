@@ -23,7 +23,6 @@ import jwt
 
 SLACK_OAUTH_URL = 'https://slack.com/api/oauth.access'
 
-CLIENT_URL = os.environ['CLIENT_URL']
 SLACK_CLIENT_ID = os.environ['SLACK_CLIENT_ID']
 SLACK_CLIENT_SECRET = os.environ['SLACK_CLIENT_SECRET']
 
@@ -77,11 +76,16 @@ def findToken(token):
     if user is None:
         reason = 'not authorized'
         return None, reason
+
     try:
-        jwt.decode(token, SECRET_KEY)
+        decoded_token = jwt.decode(token, SECRET_KEY)
     except jwt.exceptions.DecodeError:
         reason = 'invalid token'
         return None, reason
+
+    if 'access_token' not in decoded_token['slack']:
+        reason = 'invalid slack token'
+        return None,  reason
 
     return user, reason
 
@@ -196,7 +200,7 @@ def exceptions(e):
 
 if __name__ == '__main__':
     handler = RotatingFileHandler(
-        'logs/app.log', maxBytes=5*1024*1024)
+        'logs/app.log', maxBytes=5 * 1024 * 1024)
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.ERROR)
     logger.addHandler(handler)
