@@ -4,12 +4,16 @@
       <div class="text">Slack Search</div>
     </el-col>
     <el-col :span="17">
-      <SearchBox class="search-box" />
+      <SearchBox
+        v-if="$store.getters.isAuthenticated"
+        class="search-box" />
     </el-col>
     <el-col
       :span="2"
       :offset="1">
-      <img :src="imageUrl">
+      <img
+        v-if="$store.getters.isAuthenticated"
+        :src="imageUrl">
     </el-col>
   </el-row>
 </template>
