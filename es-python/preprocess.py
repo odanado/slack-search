@@ -26,7 +26,6 @@ def parse_file(fname, channel):
 
         data['channel'] = channel
         results.append(data)
-        print(data)
     return results
 
 

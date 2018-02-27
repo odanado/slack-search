@@ -40,7 +40,7 @@ services:
             - "9200:9200"
             - "9300:9300"
         environment:
-            - ES_JAVA_OPTS=-Xms512m -Xmx512m
+            - ES_JAVA_OPTS=-Xms256m -Xmx256m
 
     es-python:
         build: es-python
@@ -48,6 +48,8 @@ services:
             - ./es-python:/src
         environment:
             - ELASTICSEARCH_URL
+            - SLACK_API_TOKEN
+
 
 volumes:
     db-data:
