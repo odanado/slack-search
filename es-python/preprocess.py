@@ -41,7 +41,7 @@ def parse_file(fname, channel):
 
         results.append({'user': user, 'text': data['text'],
                         'channel': channel,
-                        'timestamp': float(data['ts'])})
+                        'timestamp': data['ts']})
     return results
 
 

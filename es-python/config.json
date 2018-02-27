@@ -15,8 +15,17 @@
     "mappings": {
         "message": {
             "properties": {
+                "user": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "channel": {
+                    "type": "string"
+                },
                 "timestamp": {
-                    "type":  "float"
+                    "type":  "string"
                 }
             }
         }
