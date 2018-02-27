@@ -16,16 +16,19 @@
         "message": {
             "properties": {
                 "user": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                 },
                 "text": {
                     "type": "string"
                 },
                 "channel": {
-                    "type": "string"
+                    "type": "string",
+                    "index": "not_analyzed"
                 },
                 "timestamp": {
-                    "type":  "string"
+                    "type":  "string",
+                    "index": "not_analyzed"
                 }
             }
         }
