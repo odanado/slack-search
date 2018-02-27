@@ -5,6 +5,7 @@ from pathlib import Path
 import click
 from elasticsearch5 import Elasticsearch, helpers
 
+from utils import convert_message
 
 ELASTICSEARCH_URL = os.environ['ELASTICSEARCH_URL']
 es = Elasticsearch([ELASTICSEARCH_URL])
@@ -22,26 +23,13 @@ def cmd():
 def parse_file(fname, channel):
     results = []
     for data in json.load(fname.open()):
-        if data['type'] != 'message':
+        data = convert_message(data)
+        if data is None:
             continue
-        if data.get('subtype', '') == 'pinned_item':
-            continue
 
-        if data.get('subtype', '') == 'bot_message':
-            user = data['bot_id']
-
-        elif 'user' not in data:
-            # 添付ファイルの場合
-            from pprint import pprint
-            if 'file' not in data:
-                pprint(data)
-            user = data['file']['user']
-        else:
-            user = data['user']
-
-        results.append({'user': user, 'text': data['text'],
-                        'channel': channel,
-                        'timestamp': data['ts']})
+        data['channel'] = channel
+        results.append(data)
+        print(data)
     return results
 
 
