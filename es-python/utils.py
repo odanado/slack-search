@@ -1,11 +1,12 @@
 def convert_message(data):
     if data['type'] != 'message':
         return None
-    if data.get('subtype', '') == 'pinned_item':
-        return None
 
-    if data.get('subtype', '') == 'bot_message':
-        user = data['bot_id']
+    if 'subtype' in data:
+        if data['subtype'] == 'bot_message':
+            user = data['bot_id']
+        else:
+            return None
 
     elif 'user' not in data:
         # 添付ファイルの場合
