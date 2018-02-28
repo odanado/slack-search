@@ -47,7 +47,6 @@ services:
         volumes:
             - ./es-python:/src
         environment:
-            - ELASTICSEARCH_URL
             - SLACK_API_TOKEN
 
 

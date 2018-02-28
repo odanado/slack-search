@@ -8,8 +8,7 @@ from elasticsearch5 import Elasticsearch, helpers
 from utils import convert_message
 from config import INDEX_NAME, TYPE_NAME
 
-ELASTICSEARCH_URL = os.environ['ELASTICSEARCH_URL']
-es = Elasticsearch([ELASTICSEARCH_URL])
+es = Elasticsearch(['elasticsearch'])
 
 
 @click.group()
