@@ -1,3 +1,4 @@
+import os
 import json
 from pathlib import Path
 
@@ -7,7 +8,8 @@ from elasticsearch5 import Elasticsearch, helpers
 from utils import convert_message
 from config import INDEX_NAME, TYPE_NAME
 
-es = Elasticsearch(['elasticsearch'])
+ELASTICSEARCH_URL = os.environ['ELASTICSEARCH_URL']
+es = Elasticsearch([ELASTICSEARCH_URL])
 
 
 @click.group()
