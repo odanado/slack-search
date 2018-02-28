@@ -22,7 +22,6 @@ services:
             - .env
         depends_on:
             - db
-            - elasticsearch
 
     db:
         image: postgres
