@@ -15,8 +15,20 @@
     "mappings": {
         "message": {
             "properties": {
+                "user": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "channel": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
                 "timestamp": {
-                    "type":  "float"
+                    "type":  "string",
+                    "index": "not_analyzed"
                 }
             }
         }

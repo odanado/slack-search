@@ -1,2 +1,3 @@
 elasticsearch5
 click
+slackclient
