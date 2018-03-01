@@ -1,3 +1,4 @@
 elasticsearch5
 click
 slackclient
+logzero

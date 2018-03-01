@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 
 import click
+from logzero import logger
 from slackclient import SlackClient
 from elasticsearch5 import Elasticsearch, helpers
 
@@ -90,6 +91,27 @@ def batch():
         print(channel_name, len(actions))
         helpers.bulk(es, actions)
         time.sleep(1)
+
+
+@cmd.command()
+def streaming():
+    if sc.rtm_connect(with_team_state=False):
+        while True:
+            messages = sc.rtm_read()
+            for data in messages:
+                print(data)
+                channel = data.get('channel', None)
+                data = convert_message(data)
+                if data is None:
+                    continue
+                data['channel'] = channel
+
+                es.index(index=INDEX_NAME, doc_type=TYPE_NAME, body=data)
+
+                logger.info(data)
+            time.sleep(1)
+    else:
+        logger.error("Connection Failed")
 
 
 if __name__ == '__main__':
