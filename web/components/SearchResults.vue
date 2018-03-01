@@ -1,42 +1,51 @@
 <template>
-  <el-table
-    :data="convertedResults"
-    style="width: 100%">
-    <el-table-column
-      prop="formatedDate"
-      label="Date"
-      width="170"/>
-    <el-table-column
-      prop="channelName"
-      label="Channel"
-      width="80"/>
-    <el-table-column
-      prop="userName"
-      label="User"
-      width="100"/>
-    <el-table-column
-      prop="text"
-      label="Text"/>
-    <el-table-column
-      label="Link"
-      width="90">
-      <template slot-scope="scope">
-        <div class="link">
-          <a
-            v-if="scope.row.link"
-            target="_blank"
-            :href="scope.row.link">Link</a>
-          <el-button
-            v-else
-            @click="fetchLink(scope.row)"
-            type="text"
-            size="medium">
-            Fetch Link
-          </el-button>
-        </div>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table
+      :data="convertedResults"
+      style="width: 100%">
+      <el-table-column
+        prop="formatedDate"
+        label="Date"
+        width="170"/>
+      <el-table-column
+        prop="channelName"
+        label="Channel"
+        width="80"/>
+      <el-table-column
+        prop="userName"
+        label="User"
+        width="100"/>
+      <el-table-column
+        prop="text"
+        label="Text"/>
+      <el-table-column
+        label="Link"
+        width="90">
+        <template slot-scope="scope">
+          <div class="link">
+            <a
+              v-if="scope.row.link"
+              target="_blank"
+              :href="scope.row.link">Link</a>
+            <el-button
+              v-else
+              @click="fetchLink(scope.row)"
+              type="text"
+              size="medium">
+              Fetch Link
+            </el-button>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <div v-if="total">
+      <el-pagination
+        @current-change="currentChange"
+        background
+        layout="prev, pager, next"
+        :total="total"/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -51,6 +60,12 @@ export default {
       type: Array,
       default() {
         return [];
+      },
+    },
+    total: {
+      type: Number,
+      default() {
+        return null;
       },
     },
     id2user: {
@@ -91,12 +106,20 @@ export default {
         Vue.set(row, 'link', res.permalink);
       }
     },
+    currentChange(newPage) {
+      this.$store.commit('setCurrentPage', newPage - 1);
+      this.$store.dispatch('searchText');
+    },
   },
 };
 </script>
 
 <style scoped>
 .link {
+  text-align: center;
+}
+.el-pagination {
+  margin-top: 20px;
   text-align: center;
 }
 </style>

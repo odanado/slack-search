@@ -94,12 +94,14 @@ def findToken(token):
 def search():
     text = flask.request.args['text']
     token = flask.request.args['token']
+    from_ = flask.request.args['from']
 
     user, reason = findToken(token)
     if user is None:
         return flask.jsonify({'status': 'error', 'reason': reason})
 
     body = {
+        "from": from_,
         "query": {
             "match_phrase": {
                 "text": text
@@ -108,11 +110,13 @@ def search():
         "sort": {"timestamp": {"order": "desc"}}
     }
     res = es.search(index='slack', doc_type='message', body=body)
-    results = [x['_source'] for x in res['hits']['hits']]
+    hits = [x['_source'] for x in res['hits']['hits']]
+    total = res['hits']['total']
 
     return flask.jsonify({
         'status': 'ok',
-        'results': results
+        'hits': hits,
+        'total': total
     })
 
 

@@ -14,7 +14,9 @@ export const state = {
   token: null,
   name: null,
   imageUrl: null,
-  searchResults: [],
+  searchResults: {},
+  targetText: null,
+  currentPage: 0,
   usersList: [],
   channelsList: [],
 };
@@ -30,7 +32,13 @@ export const mutations = {
     state.imageUrl = imageUrl || null;
   },
   setSearchResults(state, searchResults) {
-    state.searchResults = searchResults || null;
+    state.searchResults = searchResults || {};
+  },
+  setTargetText(state, targetText) {
+    state.targetText = targetText || null;
+  },
+  setCurrentPage(state, currentPage) {
+    state.currentPage = currentPage || 0;
   },
   setUsersList(state, usersList) {
     state.usersList = usersList || [];
@@ -82,17 +90,18 @@ export const actions = {
       commit('setToken', null);
     }
   },
-  async searchText({ commit, state }, text) {
-    if (!text) return;
+  async searchText({ commit, state }) {
+    const { targetText, currentPage } = state;
+    if (!targetText) return;
     const url = `${process.env.SERVER_URL}/search`;
 
     const response = await axios.get(url, {
-      params: { token: state.token, text },
+      params: { token: state.token, text: targetText, from: currentPage * 10 },
     });
 
-    const { status, results } = response.data;
+    const { status, hits, total } = response.data;
     if (status === 'ok') {
-      commit('setSearchResults', results);
+      commit('setSearchResults', { hits, total });
     } else {
       commit('setToken', null);
     }

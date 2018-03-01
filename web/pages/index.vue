@@ -1,19 +1,32 @@
 <template>
   <div>
     <SearchResults
-      :results="$store.state.searchResults"
-      :id2user="$store.getters.id2user"
-      :id2channel="$store.getters.id2channel"
+      :results="searchResults"
+      :total="searchReusltTotal"
+      :id2user="id2user"
+      :id2channel="id2channel"
     />
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex';
+
 import SearchResults from '~/components/SearchResults.vue';
 
 export default {
   components: {
     SearchResults,
+  },
+  computed: {
+    ...mapState({
+      searchResults: state => state.searchResults.hits,
+      searchReusltTotal: state => state.searchResults.total,
+    }),
+    ...mapGetters([
+      'id2user',
+      'id2channel',
+    ]),
   },
 };
 

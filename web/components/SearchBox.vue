@@ -16,7 +16,8 @@ export default {
   },
   methods: {
     search(text) {
-      this.$store.dispatch('searchText', text);
+      this.$store.commit('setTargetText', text);
+      this.$store.dispatch('searchText');
     },
   },
 };
