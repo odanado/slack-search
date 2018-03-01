@@ -12,9 +12,14 @@
         label="Channel"
         width="80"/>
       <el-table-column
-        prop="userName"
         label="User"
-        width="100"/>
+        width="100">
+        <template slot-scope="scope">
+          <img
+            :src="scope.row.userAvatar"
+            :alt="scope.row.userName">
+        </template>
+      </el-table-column>
       <el-table-column
         prop="text"
         label="Text"/>
@@ -74,6 +79,12 @@ export default {
         return new Map();
       },
     },
+    userAvatars: {
+      type: Map,
+      default() {
+        return new Map();
+      },
+    },
     id2channel: {
       type: Map,
       default() {
@@ -91,9 +102,9 @@ export default {
         });
         x.channelName = this.id2channel.get(x.channel);
         x.userName = this.id2user.get(x.user);
+        x.userAvatar = this.userAvatars.get(x.user);
         x.formatedDate = dateFormat(new Date(x.timestamp * 1000), 'yyyy-mm-dd HH:MM:ss');
       });
-
       return this.results;
     },
   },

@@ -136,6 +136,12 @@ export const getters = {
       .map(x => [x.profile.bot_id, x.name]));
     return new Map([...users, ...bots]);
   },
+  userAvatars(state) {
+    const users = new Map(state.usersList.map(x => [x.id, x.profile.image_32]));
+    const bots = new Map(state.usersList.filter(x => x.is_bot)
+      .map(x => [x.profile.bot_id, x.profile.image_32]));
+    return new Map([...users, ...bots]);
+  },
   id2channel(state) {
     return new Map(state.channelsList.map(x => [x.id, x.name]));
   },

@@ -17,6 +17,7 @@ export default {
   methods: {
     search(text) {
       this.$store.commit('setTargetText', text);
+      this.$store.commit('setCurrentPage', 0);
       this.$store.dispatch('searchText');
     },
   },

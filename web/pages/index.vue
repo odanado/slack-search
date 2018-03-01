@@ -4,6 +4,7 @@
       :results="searchResults"
       :total="searchReusltTotal"
       :id2user="id2user"
+      :user-avatars="userAvatars"
       :id2channel="id2channel"
     />
   </div>
@@ -25,6 +26,7 @@ export default {
     }),
     ...mapGetters([
       'id2user',
+      'userAvatars',
       'id2channel',
     ]),
   },
