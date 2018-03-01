@@ -6,7 +6,7 @@ import Slack from 'slack';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-import { getTokenFromCookie } from '~/utils/auth';
+import { getTokenFromCookie, unsetToken } from '~/utils/auth';
 
 Vue.use(Vuex);
 
@@ -105,6 +105,10 @@ export const actions = {
     } else {
       commit('setToken', null);
     }
+  },
+  logout({ commit }) {
+    unsetToken();
+    commit('setToken', null);
   },
   async nuxtServerInit({ commit, dispatch }, { req }) {
     const token = getTokenFromCookie(req);

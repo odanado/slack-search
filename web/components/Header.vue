@@ -11,9 +11,23 @@
     <el-col
       :span="2"
       :offset="1">
-      <img
+      <el-dropdown
         v-if="$store.getters.isAuthenticated"
-        :src="imageUrl">
+        @command="handleCommand">
+        <img :src="imageUrl">
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            disabled
+            class="user-name">
+            {{ userName }}
+          </el-dropdown-item>
+          <el-dropdown-item
+            divided
+            command="logout">
+            Logout
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-col>
   </el-row>
 </template>
@@ -30,6 +44,18 @@ export default {
     imageUrl: {
       type: String,
       default: null,
+    },
+    userName: {
+      type: String,
+      default: null,
+    },
+  },
+  methods: {
+    async handleCommand(command) {
+      if (command === 'logout') {
+        await this.$store.dispatch('logout');
+        this.$router.go({ path: '/', force: true });
+      }
     },
   },
 };
@@ -55,6 +81,9 @@ img {
   border-radius: 100px;
   margin: auto 0;
   margin-top: 5px;
+}
+.user-name {
+  color: #606266
 }
 </style>
 

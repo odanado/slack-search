@@ -1,7 +1,10 @@
 <template>
   <el-container>
     <el-header>
-      <Header :imageUrl="$store.state.imageUrl"/>
+      <Header
+        :imageUrl="$store.state.imageUrl"
+        :userName="$store.state.name"
+      />
     </el-header>
     <el-main>
       <nuxt/>
