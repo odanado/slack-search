@@ -8,9 +8,16 @@ services:
                 - SLACK_TEAM=${SLACK_TEAM}
                 - SERVER_URL=${SERVER_URL}
         ports:
-            - "80:3000"
+            - "3000:3000"
         depends_on:
-            - app
+            - nginx
+
+    nginx:
+        image: nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
 
     app:
         build: app
@@ -30,7 +37,7 @@ services:
             - db-data:/var/lib/postgresql/data
         environment:
             - POSTGRES_PASSWORD
-    
+
     elasticsearch:
         build: elasticsearch
         volumes:
