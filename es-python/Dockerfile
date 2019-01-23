@@ -4,4 +4,4 @@ RUN pip install -r requirements.txt
 
 RUN mkdir /src
 WORKDIR /src
-CMD ["tail", "-f", "/dev/null"]
+CMD ["python", "run.py", "streaming"]
